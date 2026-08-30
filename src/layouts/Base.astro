@@ -1,0 +1,34 @@
+---
+import "../styles/global.css";
+
+const { title = "Bear Habitat Atlas", description = "Living species, ranges, diet, and conservation of the world’s bears." } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>\ud83d\udc3b</text></svg>" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="wrap nav">
+        <a class="brand" href="/">Ursidae <span>Atlas</span></a>
+        <nav class="nav-links">
+          <a href="/#species">Species</a>
+          <a href="/atlas">Compare</a>
+          <a href="/map">Map</a>
+        </nav>
+      </div>
+    </header>
+    <slot />
+    <footer>
+      <div class="wrap">
+        Built as an Astro rebuild of the bear-habitat project. Figures use published ranges and typical adult masses — not a substitute for IUCN assessments.
+        Photos via Wikimedia Commons.
+      </div>
+    </footer>
+  </body>
+</html>
