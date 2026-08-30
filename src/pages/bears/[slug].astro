@@ -80,11 +80,8 @@ if (!bear) throw new Error("Unknown bear");
 
     <section class="section">
       <p class="kicker">Map</p>
-      <h2>Camera on the core range</h2>
+      <h2>Range sketch and cameras</h2>
       <HabitatMap slug={bear.slug} />
-      <div class="chips" style="margin-top:12px">
-        {bear.regions.map((r) => <span class="chip">{r.label}</span>)}
-      </div>
     </section>
 
     <section class="section">
