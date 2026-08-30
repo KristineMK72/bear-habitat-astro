@@ -16,7 +16,7 @@ import StatusChart from "../components/StatusChart.astro";
         </p>
       </div>
       <div class="figure">
-        <img src={BEARS[1].image.src} alt="Brown bear" />
+        <img src={BEARS[1].image.src} alt="Brown bear" referrerpolicy="no-referrer" loading="eager" />
         <div class="caption">Brown bear — the widest-ranging living ursid.</div>
       </div>
     </section>
@@ -34,7 +34,7 @@ import StatusChart from "../components/StatusChart.astro";
       <div class="grid">
         {BEARS.map((b) => (
           <a class="card" href={`/bears/${b.slug}`}>
-            <img src={b.image.src} alt={b.name} />
+            <img src={b.image.src} alt={b.name} referrerpolicy="no-referrer" loading="lazy" />
             <div class="card-body">
               <span class={`badge ${b.conservation.status}`}>{b.conservation.status}</span>
               <h3 style="margin-top:10px">{b.name}</h3>
