@@ -1,16 +1,62 @@
 ---
 import { BEARS, getBear } from "../data/bears";
-const focus = Astro.props.slug ? getBear(Astro.props.slug) : undefined;
-const points = (focus ? [focus] : BEARS).map((b) => ({
+
+const slug = Astro.props.slug as string | undefined;
+const focus = slug ? getBear(slug) : undefined;
+const roster = focus ? [focus] : BEARS;
+
+const points = roster.map((b) => ({
   slug: b.slug,
   name: b.name,
+  scientific: b.scientific,
+  status: b.conservation.status,
   lng: b.view.center[0],
   lat: b.view.center[1],
   color: b.accent,
+  zoom: b.view.zoom,
+  pitch: b.view.pitch ?? 35,
+  bearing: b.view.bearing ?? 0,
+  regions: b.regions,
 }));
-const cam = focus?.view ?? { center: [-20, 28] as [number, number], zoom: 1.6, pitch: 20, bearing: 0 };
+
+const cam = focus?.view ?? { center: [-20, 28] as [number, number], zoom: 1.55, pitch: 18, bearing: 0 };
 ---
-<div class="map-shell" id="habitat-map" data-points={JSON.stringify(points)} data-cam={JSON.stringify(cam)}></div>
+
+<div class="map-stack">
+  <div
+    class="map-shell"
+    id="habitat-map"
+    data-points={JSON.stringify(points)}
+    data-cam={JSON.stringify(cam)}
+    data-focus={focus?.slug ?? ""}
+  ></div>
+  <div class="map-toolbar" id="map-toolbar">
+    {!focus && (
+      <div class="chips" id="species-fly">
+        {BEARS.map((b) => (
+          <button class="chip chip-btn" type="button" data-fly={JSON.stringify({ center: b.view.center, zoom: b.view.zoom, pitch: b.view.pitch ?? 35, bearing: b.view.bearing ?? 0, slug: b.slug })}>
+            <span class="swatch" style={`background:${b.accent}`}></span>
+            {b.name}
+          </button>
+        ))}
+      </div>
+    )}
+    {focus && (
+      <div class="chips" id="region-fly">
+        <button class="chip chip-btn" type="button" data-fly={JSON.stringify({ center: focus.view.center, zoom: focus.view.zoom, pitch: focus.view.pitch ?? 35, bearing: focus.view.bearing ?? 0, slug: focus.slug })}>
+          Full camera
+        </button>
+        {focus.regions.map((r) => (
+          <button class="chip chip-btn" type="button" data-fly={JSON.stringify({ center: r.center, zoom: r.zoom, pitch: 48, bearing: -8, slug: focus.slug })}>
+            {r.label}
+          </button>
+        ))}
+      </div>
+    )}
+    <p class="map-note">Filled shapes are schematic core-range sketches for reading the atlas, not official occupancy layers.</p>
+  </div>
+</div>
+
 <script>
   import maplibregl from "maplibre-gl";
   import "maplibre-gl/dist/maplibre-gl.css";
@@ -19,6 +65,8 @@ const cam = focus?.view ?? { center: [-20, 28] as [number, number], zoom: 1.6, p
   if (el) {
     const points = JSON.parse(el.dataset.points || "[]");
     const cam = JSON.parse(el.dataset.cam || "{}");
+    const focusSlug = el.dataset.focus || "";
+
     const map = new maplibregl.Map({
       container: el,
       style: "https://tiles.openfreemap.org/styles/liberty",
@@ -28,17 +76,97 @@ const cam = focus?.view ?? { center: [-20, 28] as [number, number], zoom: 1.6, p
       bearing: cam.bearing || 0,
       attributionControl: true,
     });
+
     map.addControl(new maplibregl.NavigationControl({ visualizePitch: true }), "top-right");
+
+    const popupHtml = (p) =>
+      `<div class="map-pop"><strong>${p.name}</strong><div class="sci">${p.scientific || ""}</div><div>${p.status || ""}</div><a href="/bears/${p.slug}">Open species page</a></div>`;
+
     map.on("load", () => {
+      map.addSource("ranges", { type: "geojson", data: "/ranges.geojson" });
+
+      map.addLayer({
+        id: "range-fill",
+        type: "fill",
+        source: "ranges",
+        paint: {
+          "fill-color": ["coalesce", ["get", "accent"], "#d4a24c"],
+          "fill-opacity": 0.28,
+        },
+        ...(focusSlug ? { filter: ["==", ["get", "slug"], focusSlug] } : {}),
+      });
+
+      map.addLayer({
+        id: "range-line",
+        type: "line",
+        source: "ranges",
+        paint: {
+          "line-color": ["coalesce", ["get", "accent"], "#d4a24c"],
+          "line-width": 1.6,
+          "line-opacity": 0.9,
+        },
+        ...(focusSlug ? { filter: ["==", ["get", "slug"], focusSlug] } : {}),
+      });
+
+      map.on("click", "range-fill", (e) => {
+        const f = e.features?.[0];
+        if (!f) return;
+        const slug = f.properties?.slug;
+        const p = points.find((x) => x.slug === slug) || {
+          name: f.properties?.name,
+          scientific: "",
+          status: "Schematic range",
+          slug,
+        };
+        new maplibregl.Popup({ offset: 12 })
+          .setLngLat(e.lngLat)
+          .setHTML(popupHtml(p))
+          .addTo(map);
+      });
+
+      map.on("mouseenter", "range-fill", () => {
+        map.getCanvas().style.cursor = "pointer";
+      });
+      map.on("mouseleave", "range-fill", () => {
+        map.getCanvas().style.cursor = "";
+      });
+
       for (const p of points) {
         const node = document.createElement("div");
-        node.style.cssText = `width:14px;height:14px;border-radius:50%;background:${p.color};box-shadow:0 0 0 6px ${p.color}33,0 8px 18px #0008;cursor:pointer`;
+        node.className = "map-pin";
+        node.style.background = p.color;
         node.title = p.name;
         new maplibregl.Marker({ element: node })
           .setLngLat([p.lng, p.lat])
-          .setPopup(new maplibregl.Popup({ offset: 16 }).setHTML(`<strong>${p.name}</strong>`))
+          .setPopup(new maplibregl.Popup({ offset: 16 }).setHTML(popupHtml(p)))
           .addTo(map);
       }
+    });
+
+    const fly = (view) => {
+      if (!view?.center) return;
+      map.flyTo({
+        center: view.center,
+        zoom: view.zoom ?? 4,
+        pitch: view.pitch ?? 35,
+        bearing: view.bearing ?? 0,
+        speed: 1.15,
+        curve: 1.4,
+        essential: true,
+      });
+      if (view.slug && map.getLayer("range-fill")) {
+        const filter = ["==", ["get", "slug"], view.slug];
+        map.setFilter("range-fill", filter);
+        map.setFilter("range-line", filter);
+      }
+    };
+
+    document.querySelectorAll("[data-fly]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        try {
+          fly(JSON.parse(btn.getAttribute("data-fly") || "{}"));
+        } catch {}
+      });
     });
   }
 </script>

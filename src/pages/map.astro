@@ -3,19 +3,23 @@ import Base from "../layouts/Base.astro";
 import HabitatMap from "../components/HabitatMap.astro";
 import { BEARS } from "../data/bears";
 ---
-<Base title="Bear range camera map">
+<Base title="Bear range map">
   <main class="wrap">
     <section class="section">
       <p class="kicker">Map</p>
-      <h1>Core range cameras</h1>
+      <h1>Range sketches and cameras</h1>
       <p class="lede">
-        Markers sit on a representative camera point for each species — not a full occupancy layer.
-        Open a species page for regional chips.
+        Colored fills are simplified core-range sketches for all eight living bears.
+        Buttons fly the camera; click a polygon or pin for the species page.
+        Minnesota’s north woods is a dedicated camera on the American black bear page.
       </p>
       <HabitatMap />
-      <div class="chips" style="margin-top:16px">
+      <div class="legend">
         {BEARS.map((b) => (
-          <a class="chip" href={`/bears/${b.slug}`}>{b.name}</a>
+          <a class="legend-item" href={`/bears/${b.slug}`}>
+            <span class="swatch" style={`background:${b.accent}`}></span>
+            <span>{b.name}</span>
+          </a>
         ))}
       </div>
     </section>
