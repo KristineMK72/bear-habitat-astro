@@ -53,7 +53,7 @@ export const BEARS: Bear[] = [
     conservation: { status: "Least Concern", iucn: "Least Concern — managed by states and provinces", notes: ["Most abundant living bear species.", "Conflict is usually about attractants."] },
     threats: ["Vehicle collisions", "Food-conditioned conflict", "Habitat fragmentation"],
     funFacts: ["Not always black — color morphs are common.", "Excellent climbers.", "Minnesota’s population is among the more studied in the Midwest."],
-    image: { src: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/01_Schwarzb%C3%A4r.jpg/1280px-01_Schwarzb%C3%A4r.jpg", credit: "Wikimedia Commons", page: "https://commons.wikimedia.org/wiki/File:01_Schwarzbär.jpg" },
+    image: { src: "https://commons.wikimedia.org/wiki/Special:FilePath/01_Schwarzb%C3%A4r.jpg", credit: "Wikimedia Commons", page: "https://commons.wikimedia.org/wiki/File:01_Schwarzbär.jpg" },
     view: { center: [-95, 48], zoom: 3.4, pitch: 45, bearing: -10 },
     regions: [
       { id: "mn", label: "Minnesota north woods", center: [-93.3, 47.5], zoom: 6.2 },
@@ -81,7 +81,7 @@ export const BEARS: Bear[] = [
     conservation: { status: "Least Concern", iucn: "Least Concern globally; some southern populations are highly threatened", notes: ["Secure in Alaska, Canada, and Russia.", "Isolated southern populations remain at risk."] },
     threats: ["Habitat loss at range edges", "Human conflict", "Isolation of remnant populations"],
     funFacts: ["Shoulder hump is digging muscle — a field mark versus black bears.", "Kodiak bears are an island brown-bear subspecies."],
-    image: { src: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/GrizzlyBearJeanBeaufort.jpg/1280px-GrizzlyBearJeanBeaufort.jpg", credit: "Jean Beaufort / Wikimedia", page: "https://commons.wikimedia.org/wiki/File:GrizzlyBearJeanBeaufort.jpg" },
+    image: { src: "https://commons.wikimedia.org/wiki/Special:FilePath/GrizzlyBearJeanBeaufort.jpg", credit: "Jean Beaufort / Wikimedia", page: "https://commons.wikimedia.org/wiki/File:GrizzlyBearJeanBeaufort.jpg" },
     view: { center: [-150, 61], zoom: 3.6, pitch: 50, bearing: 8 },
     regions: [{ id: "yellowstone", label: "Greater Yellowstone", center: [-110.6, 44.6], zoom: 6.2 }, { id: "katmai", label: "Katmai", center: [-155.9, 58.6], zoom: 7 }]
   },
@@ -105,7 +105,7 @@ export const BEARS: Bear[] = [
     conservation: { status: "Vulnerable", iucn: "Vulnerable — sea-ice loss is the primary long-term threat", notes: ["Chukchi Sea ~3,000 and Southern Beaufort ~900.", "Black skin under white fur helps absorb heat."] },
     threats: ["Loss of sea ice", "Industrial disturbance", "Pollution"],
     funFacts: ["Paws are partially webbed.", "Cubs are born in winter dens weighing a little more than a pound."],
-    image: { src: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Polar_Bear_-_Alaska_%28cropped%29.jpg/1280px-Polar_Bear_-_Alaska_%28cropped%29.jpg", credit: "Alan Wilson / Wikimedia Commons", page: "https://commons.wikimedia.org/wiki/File:Polar_Bear_-_Alaska_(cropped).jpg" },
+    image: { src: "https://commons.wikimedia.org/wiki/Special:FilePath/Polar_Bear_-_Alaska_%28cropped%29.jpg", credit: "Alan Wilson / Wikimedia Commons", page: "https://commons.wikimedia.org/wiki/File:Polar_Bear_-_Alaska_(cropped).jpg" },
     view: { center: [-156, 71], zoom: 3.8, pitch: 50, bearing: 12 },
     regions: [{ id: "beaufort", label: "Southern Beaufort", center: [-148, 70.5], zoom: 5.4 }, { id: "chukchi", label: "Chukchi Sea", center: [-170, 69], zoom: 4.8 }]
   },
@@ -129,7 +129,7 @@ export const BEARS: Bear[] = [
     conservation: { status: "Vulnerable", iucn: "Vulnerable — downlisted from Endangered", notes: ["Wild population is still small and fragmented.", "Corridors between reserves matter as much as headcount."] },
     threats: ["Habitat fragmentation", "Bamboo die-off cycles", "Narrow range"],
     funFacts: ["The ‘thumb’ is an enlarged radial sesamoid.", "Cubs are tiny relative to the mother."],
-    image: { src: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Grosser_Panda.JPG/1280px-Grosser_Panda.JPG", credit: "Wikimedia Commons", page: "https://commons.wikimedia.org/wiki/File:Grosser_Panda.JPG" },
+    image: { src: "https://commons.wikimedia.org/wiki/Special:FilePath/Grosser_Panda.JPG", credit: "Wikimedia Commons", page: "https://commons.wikimedia.org/wiki/File:Grosser_Panda.JPG" },
     view: { center: [104.1, 31.0], zoom: 5.6, pitch: 45, bearing: 0 },
     regions: [{ id: "sichuan", label: "Sichuan basins", center: [103.4, 30.7], zoom: 6.4 }]
   },
@@ -153,7 +153,7 @@ export const BEARS: Bear[] = [
     conservation: { status: "Vulnerable", iucn: "Vulnerable", notes: ["Only living member of Tremarctinae.", "Face patterns can ID individuals."] },
     threats: ["Deforestation", "Agricultural conversion", "Retaliatory killing"],
     funFacts: ["No two spectacle patterns match.", "They build tree platforms to feed and rest."],
-    image: { src: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Spectacled_Bear_-_Houston_Zoo.jpg/1280px-Spectacled_Bear_-_Houston_Zoo.jpg", credit: "Wikimedia Commons", page: "https://commons.wikimedia.org/wiki/File:Spectacled_Bear_-_Houston_Zoo.jpg" },
+    image: { src: "https://commons.wikimedia.org/wiki/Special:FilePath/Tremarctos%20ornatus%20289948407.jpg", credit: "Wikimedia Commons", page: "https://commons.wikimedia.org/wiki/File:Tremarctos_ornatus_289948407.jpg" },
     view: { center: [-76, -8], zoom: 3.6, pitch: 40, bearing: -8 },
     regions: [{ id: "peru", label: "Peruvian Andes", center: [-76.5, -10], zoom: 5.2 }]
   },
@@ -177,7 +177,7 @@ export const BEARS: Bear[] = [
     conservation: { status: "Vulnerable", iucn: "Vulnerable", notes: ["Range has contracted with forest loss.", "Human conflict remains serious."] },
     threats: ["Habitat loss", "Conflict killings", "Poaching"],
     funFacts: ["Cubs often ride on the mother’s back.", "Insect-sucking can be heard yards away."],
-    image: { src: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Sloth_Bear_Washington_DC.JPG/1280px-Sloth_Bear_Washington_DC.JPG", credit: "Wikimedia Commons", page: "https://commons.wikimedia.org/wiki/File:Sloth_Bear_Washington_DC.JPG" },
+    image: { src: "https://commons.wikimedia.org/wiki/Special:FilePath/Sloth_Bear_Washington_DC.JPG", credit: "Wikimedia Commons", page: "https://commons.wikimedia.org/wiki/File:Sloth_Bear_Washington_DC.JPG" },
     view: { center: [78.9, 21.1], zoom: 4.2, pitch: 35, bearing: 0 },
     regions: [{ id: "central-india", label: "Central India", center: [79, 22], zoom: 5.4 }]
   },
@@ -201,7 +201,7 @@ export const BEARS: Bear[] = [
     conservation: { status: "Vulnerable", iucn: "Vulnerable", notes: ["Oil-palm conversion is a major pressure.", "Poaching and the pet trade continue."] },
     threats: ["Deforestation", "Poaching", "Pet trade"],
     funFacts: ["Tongue can reach 8–10 inches.", "Chest sun marks are individually unique."],
-    image: { src: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Helarctos_malayanus_at_the_Cincinnati_Zoo.jpg/1280px-Helarctos_malayanus_at_the_Cincinnati_Zoo.jpg", credit: "Wikimedia Commons", page: "https://commons.wikimedia.org/wiki/File:Helarctos_malayanus_at_the_Cincinnati_Zoo.jpg" },
+    image: { src: "https://commons.wikimedia.org/wiki/Special:FilePath/Malaienbaer%200744-2.jpg", credit: "Wikimedia Commons", page: "https://commons.wikimedia.org/wiki/File:Malaienbaer_0744-2.jpg" },
     view: { center: [108, 4], zoom: 3.8, pitch: 35, bearing: 10 },
     regions: [{ id: "borneo", label: "Borneo", center: [114, 1.5], zoom: 5.2 }]
   },
@@ -225,7 +225,7 @@ export const BEARS: Bear[] = [
     conservation: { status: "Vulnerable", iucn: "Vulnerable", notes: ["Still widespread, but many subpopulations are declining.", "Chest crescent is the easiest field mark."] },
     threats: ["Bile farming / poaching", "Deforestation", "Conflict"],
     funFacts: ["Called moon bears for the white chest crescent.", "Strong climbers, like American black bears."],
-    image: { src: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Ursus_thibetanus_3_%28Piotr_Kuczynski%29.jpg/1280px-Ursus_thibetanus_3_%28Piotr_Kuczynski%29.jpg", credit: "Piotr Kuczynski / Wikimedia Commons", page: "https://commons.wikimedia.org/wiki/File:Ursus_thibetanus_3_(Piotr_Kuczynski).jpg" },
+    image: { src: "https://commons.wikimedia.org/wiki/Special:FilePath/Asiatic%20Black%20Bear.jpg", credit: "Wikimedia Commons", page: "https://commons.wikimedia.org/wiki/File:Asiatic_Black_Bear.jpg" },
     view: { center: [100, 32], zoom: 3.4, pitch: 35, bearing: 0 },
     regions: [{ id: "japan", label: "Honshu", center: [138.2, 36.2], zoom: 5.6 }, { id: "himalaya", label: "Himalaya", center: [85, 28], zoom: 5.2 }]
   }
