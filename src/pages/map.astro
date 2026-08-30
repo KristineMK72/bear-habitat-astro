@@ -1,0 +1,23 @@
+---
+import Base from "../layouts/Base.astro";
+import HabitatMap from "../components/HabitatMap.astro";
+import { BEARS } from "../data/bears";
+---
+<Base title="Bear range camera map">
+  <main class="wrap">
+    <section class="section">
+      <p class="kicker">Map</p>
+      <h1>Core range cameras</h1>
+      <p class="lede">
+        Markers sit on a representative camera point for each species — not a full occupancy layer.
+        Open a species page for regional chips.
+      </p>
+      <HabitatMap />
+      <div class="chips" style="margin-top:16px">
+        {BEARS.map((b) => (
+          <a class="chip" href={`/bears/${b.slug}`}>{b.name}</a>
+        ))}
+      </div>
+    </section>
+  </main>
+</Base>

@@ -1,0 +1,20 @@
+---
+import { BEARS } from "../data/bears";
+const max = Math.max(...BEARS.map((b) => b.size.weightMaleLb));
+---
+<div class="panel">
+  <p class="kicker">Figure 1</p>
+  <h2>Typical adult male mass</h2>
+  <p class="sci">Pounds. Mid-range values used for comparison, not records.</p>
+  <div class="bars" style="margin-top:16px">
+    {BEARS.map((b) => (
+      <div class="bar-row">
+        <div>{b.name.replace("American ", "").replace("Andean ", "").replace("Giant ", "")}</div>
+        <div class="bar-track">
+          <div class="bar-fill" style={`width:${Math.round((b.size.weightMaleLb / max) * 100)}%`}></div>
+        </div>
+        <div>{b.size.weightMaleLb}</div>
+      </div>
+    ))}
+  </div>
+</div>

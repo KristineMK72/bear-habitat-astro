@@ -1,0 +1,67 @@
+---
+import Base from "../layouts/Base.astro";
+import { BEARS, FAMILY_STATS } from "../data/bears";
+import WeightChart from "../components/WeightChart.astro";
+import StatusChart from "../components/StatusChart.astro";
+---
+<Base title="Ursidae Atlas — eight living bears">
+  <main class="wrap">
+    <section class="hero">
+      <div>
+        <p class="kicker">Family Ursidae</p>
+        <h1>Eight living bears. One family, four continents.</h1>
+        <p class="lede">
+          A field atlas of range, habitat, diet, mass, and conservation —
+          rebuilt in Astro so the data and figures can sit still long enough to be read.
+        </p>
+      </div>
+      <div class="figure">
+        <img src={BEARS[1].image.src} alt="Brown bear" />
+        <div class="caption">Brown bear — the widest-ranging living ursid.</div>
+      </div>
+    </section>
+
+    <div class="stats">
+      <div class="stat"><b>{FAMILY_STATS.livingSpecies}</b><span>Living species</span></div>
+      <div class="stat"><b>{FAMILY_STATS.threatened}</b><span>Threatened globally</span></div>
+      <div class="stat"><b>{FAMILY_STATS.continents}</b><span>Continents occupied</span></div>
+      <div class="stat"><b>{FAMILY_STATS.smallestLb}–{FAMILY_STATS.largestLb}</b><span>Lb, sun bear to Kodiak / polar</span></div>
+    </div>
+
+    <section class="section" id="species">
+      <p class="kicker">Species gallery</p>
+      <h2>Choose a bear</h2>
+      <div class="grid">
+        {BEARS.map((b) => (
+          <a class="card" href={`/bears/${b.slug}`}>
+            <img src={b.image.src} alt={b.name} />
+            <div class="card-body">
+              <span class={`badge ${b.conservation.status}`}>{b.conservation.status}</span>
+              <h3 style="margin-top:10px">{b.name}</h3>
+              <p class="sci">{b.scientific}</p>
+              <p>{b.shortBlurb}</p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="section split">
+      <WeightChart />
+      <StatusChart />
+    </section>
+
+    <section class="section">
+      <div class="panel">
+        <p class="kicker">How to read this atlas</p>
+        <h2>What changed from the old site</h2>
+        <p>
+          The original Next.js repo covered four North American forms and a stub map.
+          This rebuild expands to all eight living species, adds comparable mass and
+          diet figures, conservation chips, and a quieter layout that can grow into
+          GeoJSON range layers later.
+        </p>
+      </div>
+    </section>
+  </main>
+</Base>

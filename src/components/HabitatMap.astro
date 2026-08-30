@@ -1,0 +1,44 @@
+---
+import { BEARS, getBear } from "../data/bears";
+const focus = Astro.props.slug ? getBear(Astro.props.slug) : undefined;
+const points = (focus ? [focus] : BEARS).map((b) => ({
+  slug: b.slug,
+  name: b.name,
+  lng: b.view.center[0],
+  lat: b.view.center[1],
+  color: b.accent,
+}));
+const cam = focus?.view ?? { center: [-20, 28] as [number, number], zoom: 1.6, pitch: 20, bearing: 0 };
+---
+<div class="map-shell" id="habitat-map" data-points={JSON.stringify(points)} data-cam={JSON.stringify(cam)}></div>
+<script>
+  import maplibregl from "maplibre-gl";
+  import "maplibre-gl/dist/maplibre-gl.css";
+
+  const el = document.getElementById("habitat-map");
+  if (el) {
+    const points = JSON.parse(el.dataset.points || "[]");
+    const cam = JSON.parse(el.dataset.cam || "{}");
+    const map = new maplibregl.Map({
+      container: el,
+      style: "https://tiles.openfreemap.org/styles/liberty",
+      center: cam.center || [0, 20],
+      zoom: cam.zoom || 1.7,
+      pitch: cam.pitch || 0,
+      bearing: cam.bearing || 0,
+      attributionControl: true,
+    });
+    map.addControl(new maplibregl.NavigationControl({ visualizePitch: true }), "top-right");
+    map.on("load", () => {
+      for (const p of points) {
+        const node = document.createElement("div");
+        node.style.cssText = `width:14px;height:14px;border-radius:50%;background:${p.color};box-shadow:0 0 0 6px ${p.color}33,0 8px 18px #0008;cursor:pointer`;
+        node.title = p.name;
+        new maplibregl.Marker({ element: node })
+          .setLngLat([p.lng, p.lat])
+          .setPopup(new maplibregl.Popup({ offset: 16 }).setHTML(`<strong>${p.name}</strong>`))
+          .addTo(map);
+      }
+    });
+  }
+</script>

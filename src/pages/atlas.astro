@@ -1,0 +1,45 @@
+---
+import Base from "../layouts/Base.astro";
+import { BEARS } from "../data/bears";
+import WeightChart from "../components/WeightChart.astro";
+import StatusChart from "../components/StatusChart.astro";
+---
+<Base title="Compare the eight bears">
+  <main class="wrap">
+    <section class="section">
+      <p class="kicker">Comparative table</p>
+      <h1>Side by side</h1>
+      <p class="lede">Masses are typical adult midpoints for charting, not maximum records.</p>
+      <div class="panel" style="overflow:auto">
+        <table class="compare">
+          <thead>
+            <tr>
+              <th>Species</th>
+              <th>Status</th>
+              <th>♂ lb</th>
+              <th>♀ lb</th>
+              <th>Continents</th>
+              <th>Diet emphasis</th>
+            </tr>
+          </thead>
+          <tbody>
+            {BEARS.map((b) => (
+              <tr>
+                <td><a href={`/bears/${b.slug}`}>{b.name}</a><div class="sci">{b.scientific}</div></td>
+                <td>{b.conservation.status}</td>
+                <td>{b.size.weightMaleLb}</td>
+                <td>{b.size.weightFemaleLb}</td>
+                <td>{b.continents.join(", ")}</td>
+                <td>{b.dietMix[0].label} {b.dietMix[0].pct}%</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+    <section class="section split">
+      <WeightChart />
+      <StatusChart />
+    </section>
+  </main>
+</Base>
