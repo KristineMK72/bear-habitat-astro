@@ -1,0 +1,98 @@
+---
+import Base from "../../layouts/Base.astro";
+import HabitatMap from "../../components/HabitatMap.astro";
+import { BEARS, getBear } from "../../data/bears";
+
+export function getStaticPaths() {
+  return BEARS.map((b) => ({ params: { slug: b.slug } }));
+}
+
+const { slug } = Astro.params;
+const bear = getBear(slug!);
+if (!bear) throw new Error("Unknown bear");
+---
+<Base title={`${bear.name} — Ursidae Atlas`} description={bear.shortBlurb}>
+  <main class="wrap">
+    <section class="hero">
+      <div>
+        <p class="kicker">{bear.family}</p>
+        <h1>{bear.name}</h1>
+        <p class="sci">{bear.scientific}</p>
+        <p class="lede">{bear.heroSubtitle}</p>
+        <p>{bear.story}</p>
+        <div class="chips" style="margin-top:14px">
+          <span class={`badge ${bear.conservation.status}`}>{bear.conservation.iucn}</span>
+          {bear.continents.map((c) => <span class="chip">{c}</span>)}
+        </div>
+      </div>
+      <figure class="figure">
+        <img src={bear.image.src} alt={bear.name} />
+        <figcaption class="caption">
+          {bear.image.credit} · <a href={bear.image.page}>source</a>
+        </figcaption>
+      </figure>
+    </section>
+
+    <div class="stats">
+      <div class="stat"><b>{bear.size.weightMaleLb}</b><span>Typical male, lb</span></div>
+      <div class="stat"><b>{bear.size.weightFemaleLb}</b><span>Typical female, lb</span></div>
+      <div class="stat"><b>{bear.size.standingUpright}</b><span>Standing height</span></div>
+      <div class="stat"><b>{bear.size.lifespanWild}</b><span>Wild lifespan</span></div>
+    </div>
+
+    <section class="section split">
+      <article class="panel">
+        <p class="kicker">Range</p>
+        <h2>Where they live</h2>
+        <p>{bear.coreRangeSummary}</p>
+        <div class="chips">{bear.where.map((w) => <span class="chip">{w}</span>)}</div>
+      </article>
+      <article class="panel">
+        <p class="kicker">Habitat</p>
+        <h2>What they use</h2>
+        <ul>{bear.habitat.map((h) => <li>{h}</li>)}</ul>
+      </article>
+    </section>
+
+    <section class="section split">
+      <article class="panel">
+        <p class="kicker">Figure — diet mix</p>
+        <h2>What fills the year</h2>
+        <div class="bars">
+          {bear.dietMix.map((d) => (
+            <div class="bar-row">
+              <div>{d.label}</div>
+              <div class="bar-track"><div class="bar-fill" style={`width:${d.pct}%`}></div></div>
+              <div>{d.pct}%</div>
+            </div>
+          ))}
+        </div>
+        <ul>{bear.diet.map((d) => <li>{d}</li>)}</ul>
+      </article>
+      <article class="panel">
+        <p class="kicker">Conservation</p>
+        <h2>{bear.conservation.status}</h2>
+        <ul>{bear.conservation.notes.map((n) => <li>{n}</li>)}</ul>
+        <h3>Pressures</h3>
+        <div class="chips">{bear.threats.map((t) => <span class="chip">{t}</span>)}</div>
+      </article>
+    </section>
+
+    <section class="section">
+      <p class="kicker">Map</p>
+      <h2>Camera on the core range</h2>
+      <HabitatMap slug={bear.slug} />
+      <div class="chips" style="margin-top:12px">
+        {bear.regions.map((r) => <span class="chip">{r.label}</span>)}
+      </div>
+    </section>
+
+    <section class="section">
+      <article class="panel">
+        <p class="kicker">Field notes</p>
+        <h2>Worth remembering</h2>
+        <ul>{bear.funFacts.map((f) => <li>{f}</li>)}</ul>
+      </article>
+    </section>
+  </main>
+</Base>
